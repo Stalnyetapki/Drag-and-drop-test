@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.11.2'
+}
+
+group 'com.herokuapp'
+version '1.0-SNAPSHOT'
+
+allure {
+    report {
+        version.set("2.20.1") //формирование json файла аллюра + версия
+    }
+    adapter {
+        aspectjWeaver.set(true) //обработка аннотоции @Step
+        frameworks {
+            junit5 { // название фреймворка
+                adapterVersion.set("2.20.1") //версия интеграции фреймворка
+            }
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation (
+            'com.codeborne:selenide:6.10.1',
+            'org.junit.jupiter:junit-jupiter-api:5.9.1',
+            'io.qameta.allure:allure-selenide:2.20.1'
+    )
+
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.9.1')
+}
+
+test {
+    useJUnitPlatform()
+    systemProperties(System.getProperties())
+}
